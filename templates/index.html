@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organization Servers</title>
+</head>
+<body>
+
+    <div style="text-align: right; margin-top: 10px; margin-right: 20px;">
+        <a href="{{ url_for('admin_login') }}">Admin Login</a>
+    </div>
+
+
+    <h1>Organization List</h1>
+
+    <!-- Search Bar -->
+    <form method="get" action="/" autocomplete="off">
+        <input type="text" name="q" placeholder="Search by any field">
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Advanced Search</h2>
+    <form method="get" action="/advanced_search" autocomplete="off">
+        <label>CMS:</label><br>
+        <input type="text" name="cms"><br>
+    
+        <label>Server:</label><br>
+        <input type="text" name="server"><br>
+    
+        <label>Remote Type:</label><br>
+        <input type="text" name="remote_type"><br><br>
+    
+        <button type="submit">Advanced Search</button>
+    </form>
+    
+    <!-- List of Organizations -->
+    <h2>Recently Added</h2>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>CMS</th>
+                <th>Server</th>
+                <th>Remote Type</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for org in organizations %}
+            <tr>
+                <td>{{ org[1] }}</td> <!-- organization -->
+                <td>{{ org[2] }}</td> <!-- cms -->
+                <td>{{ org[3] }}</td> <!-- server -->
+                <td>{{ org[4] }}</td> <!-- remote_type -->
+                <td>{{ org[5] }}</td> <!-- notes -->
+        
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function showMagicInfoOptions() {
+            var serverSelect = document.getElementById('server');
+            var magicInfoDiv = document.getElementById('magicinfo-options');
+            var magicInfoSelect = document.getElementById('magicinfo_server');
+            var finalServerInput = document.getElementById('final_server');
+        
+            if (serverSelect.value === 'MagicINFO') {
+                magicInfoDiv.style.display = 'block';
+                finalServerInput.value = ''; // Clear at first
+                magicInfoSelect.onchange = function() {
+                    finalServerInput.value = magicInfoSelect.value;
+                };
+            } else {
+                magicInfoDiv.style.display = 'none';
+                finalServerInput.value = serverSelect.value;
+            }
+        }
+        </script>
+        
+        
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Organization</title>
+</head>
+<body>
+    <h2>Add New Organization</h2>
+
+    <form method="post" action="{{ url_for('add_organization_admin') }}" autocomplete="off">
+
+        <!-- DUMMY fields to block browser autocomplete -->
+        <input type="text" name="fake_username" style="display:none">
+        <input type="password" name="fake_password" style="display:none">
+
+        <label>Organization Name:</label><br>
+        <input type="text" name="organization" autocomplete="off" required><br>
+
+        <label>CMS:</label><br>
+        <select name="cms" required>
+            <option value="">-- Select CMS --</option>
+            <option value="MagicInfo">MagicInfo</option>
+            <option value="Navori/Qsign">Navori/Qsign</option>
+            <option value="Broadsign">Broadsign</option>
+            <option value="Tripleplay">Tripleplay</option>
+        </select><br>
+
+        <label>Server:</label><br>
+        <select id="server" required onchange="showMagicInfoOptions()">
+            <option value="">-- Select Server --</option>
+            <option value="MagicINFO">MagicINFO</option>
+            <option value="Qsign-Main">Qsign-Main</option>
+            <option value="Qsign-BMO">Qsign-BMO</option>
+            <option value="Broadsign">Broadsign</option>
+            <option value="Tripleplay">Tripleplay</option>
+        </select><br><br>
+
+        <!-- Second dropdown (hidden at first) -->
+        <div id="magicinfo-options" style="display:none;">
+            <label>MagicINFO Server:</label><br>
+            <select id="magicinfo_server">
+                <option value="">-- Select MagicINFO Server --</option>
+                <option value="MI1">MI1</option>
+                <option value="MI2">MI2</option>
+                <option value="MI3">MI3</option>
+                <option value="MI4">MI4</option>
+                <option value="MI4b">MI4b</option>
+                <option value="MI5">MI5</option>
+                <option value="MI6b">MI6b</option>
+                <option value="MI7">MI7</option>
+                <option value="MI7b">MI7b</option>
+                <option value="MI8">MI8</option>
+                <option value="MI9">MI9</option>
+                <option value="MI9b">MI9b</option>
+            </select><br><br>
+        </div>
+
+        <!-- Hidden input to hold the final server value -->
+        <input type="hidden" id="final_server" name="server">
+
+        <label>Remote Type:</label><br>
+        <select name="remote_type" required>
+            <option value="">-- Select Remote Type --</option>
+            <option value="MagicINFO">MagicINFO</option>
+            <option value="Teamviewer">Teamviewer</option>
+            <option value="LG Connected Care">LG Connected Care</option>
+            <option value="Nummax Manager">Nummax Manager</option>
+        </select><br><br>
+
+        <label>Notes:</label><br>
+        <textarea name="notes" autocomplete="off"></textarea><br><br>
+
+        <button type="submit">Add Organization</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+
+    <script>
+        function showMagicInfoOptions() {
+            var serverSelect = document.getElementById('server');
+            var magicInfoDiv = document.getElementById('magicinfo-options');
+            var magicInfoSelect = document.getElementById('magicinfo_server');
+            var finalServerInput = document.getElementById('final_server');
+
+            if (serverSelect.value === 'MagicINFO') {
+                magicInfoDiv.style.display = 'block';
+                finalServerInput.value = ''; // Clear at first
+                magicInfoSelect.onchange = function() {
+                    finalServerInput.value = magicInfoSelect.value;
+                };
+            } else {
+                magicInfoDiv.style.display = 'none';
+                finalServerInput.value = serverSelect.value;
+            }
+        }
+    </script>
+</body>
+</html>

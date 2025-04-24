@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Welcome Admin!</h2>
+
+    <p><a href="{{ url_for('admin_logout') }}">Logout</a></p>
+
+    <h3>Manage Organizations</h3>
+    <ul>
+        <li><a href="{{ url_for('add_organization_admin') }}">Add Organization</a></li>
+        <li><a href="#">Edit Organization</a></li>
+        <li><a href="#">Delete Organization</a></li>
+    </ul>
+
+    <h3>Recently Added Organizations (Last 10)</h3>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Organization</th>
+                <th>CMS</th>
+                <th>Server</th>
+                <th>Remote Type</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for org in organizations %}
+            <tr>
+                <td>{{ org[1] }}</td> <!-- organization name -->
+                <td>{{ org[2] }}</td> <!-- cms -->
+                <td>{{ org[3] }}</td> <!-- server -->
+                <td>{{ org[4] }}</td> <!-- remote type -->
+                <td>{{ org[5] }}</td> <!-- notes -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
